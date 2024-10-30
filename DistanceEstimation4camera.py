@@ -38,7 +38,7 @@ def object_detector(image):
     classes, scores, boxes = model.detect(image, CONFIDENCE_THRESHOLD, NMS_THRESHOLD)
     data_list = []
     for classid, score, box in zip(classes, scores, boxes):
-        if class_names[classid] == "person":  # Only consider "person" class
+        if class_names[classid] == "person":  # 사람만 감지
             label = "%s : %f" % (class_names[classid], score)
             cv.rectangle(image, box, GREEN, 2)
             cv.putText(image, label, (box[0], box[1] - 14), FONTS, 0.5, GREEN, 2)
@@ -59,7 +59,7 @@ person_data = object_detector(ref_person)
 person_width_in_rf = person_data[0][1]
 focal_person = focal_length_finder(KNOWN_DISTANCE, PERSON_WIDTH, person_width_in_rf)
 
-# Initialize 4 camera captures
+# 카메라 초기화
 caps = [cv.VideoCapture(0)]
 caps.append(cv.VideoCapture(2))
 caps.append(cv.VideoCapture(4))
